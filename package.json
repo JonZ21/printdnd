@@ -1,0 +1,22 @@
+{
+  "name": "printdnd",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "bake:episode": "python3 scripts/bake-episode.py",
+    "bake:clip": "bash scripts/bake-clip.sh"
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  },
+  "dependencies": {
+    "lenis": "^1.1.18",
+    "three": "^0.171.0"
+  }
+}

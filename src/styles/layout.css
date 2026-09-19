@@ -1,0 +1,137 @@
+.shell {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* A 12-column bed. Sections deliberately take different spans so the page never
+   settles into a repeating rhythm. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.2vw, 2rem);
+}
+
+.masthead {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.6rem 0;
+}
+
+.wordmark {
+  display: block;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.wordmark__name {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  /* Optical nudge: the P's shoulder makes the block look indented if set flush. */
+  margin-left: -0.055em;
+}
+
+.wordmark__expansion {
+  display: block;
+  margin-top: 0.42rem;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.34em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.masthead__nav {
+  display: flex;
+  gap: clamp(0.9rem, 2vw, 1.9rem);
+  padding-top: 0.35rem;
+}
+
+.masthead__nav a {
+  font-family: var(--mono);
+  font-size: var(--label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.masthead__nav a:hover {
+  color: var(--paper);
+}
+
+section {
+  position: relative;
+}
+
+/* Section headers: a mono index in the left margin, a rule, then the heading. */
+.section-mark {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  padding-bottom: clamp(1.6rem, 4vw, 3rem);
+  border-top: var(--rule);
+  padding-top: 0.85rem;
+  margin-top: clamp(4.5rem, 11vw, 9rem);
+}
+
+.section-mark__index {
+  font-family: var(--mono);
+  font-size: var(--label);
+  letter-spacing: 0.14em;
+  color: var(--molten);
+}
+
+.section-mark__label {
+  font-family: var(--mono);
+  font-size: var(--label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.site-footer {
+  margin-top: clamp(5rem, 12vw, 10rem);
+  border-top: var(--rule);
+  padding-block: 2.2rem 3rem;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.6rem;
+}
+
+.footer-domain {
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(2.6rem, 11vw, 7.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  color: var(--ink-300);
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .masthead {
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .masthead__nav {
+    flex-wrap: wrap;
+  }
+}

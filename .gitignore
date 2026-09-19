@@ -1,0 +1,8 @@
+node_modules
+dist
+.vercel
+.DS_Store
+*.log
+
+# Scratch output from the bake scripts (the committed artefacts live in public/)
+scripts/_scratch/

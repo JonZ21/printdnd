@@ -1,0 +1,58 @@
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/fonts/barlow-condensed-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/fonts/barlow-condensed-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --ink-000: #0a0a0b;
+  --ink-100: #121214;
+  --ink-150: #161619;
+  --ink-200: #1f1f23;
+  --ink-300: #2b2b31;
+
+  --paper: #edeae4;
+  --muted: #7a7873;
+  --muted-bright: #9b9890;
+
+  --beam: #7fe7ff;
+  --molten: #ff5b1f;
+
+  --display: "Barlow Condensed", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --rule: 1px solid var(--ink-200);
+
+  --label: 0.6875rem;
+  --step-0: 1.0625rem;
+  --step-1: clamp(1.25rem, 0.9rem + 1.1vw, 1.75rem);
+  --step-2: clamp(1.9rem, 1.2rem + 2.8vw, 3.4rem);
+  --step-3: clamp(2.8rem, 1.4rem + 6vw, 7rem);
+}
