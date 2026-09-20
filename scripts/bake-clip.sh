@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-# Encode the robot's own camera footage into web-ready clips.
+# Encode the project's footage into web-ready clips.
 #
-# Two clips, both from the robot's gripper cameras:
+# Four clips:
 #
+#   vla        the robot clearing the printer on its own at normal speed, shot from
+#              across the table. No teleoperation. This is the hero -- it is the only
+#              clip that shows the whole thing actually working.
+#   timelapse  the build on the hackathon floor, compressed.
 #   pickup     the gripper closing on a finished part, lifting it off the plate and
-#              setting it down. This is the hero clip -- the whole pitch in 7 seconds.
+#              setting it down.
 #   wrist-cam  the left arm camera from ep000000 of the team's own
 #              quest_teleop/"lift up the printer bed" dataset -- the *same* episode
 #              public/data/episode.json is baked from, so this clip and the 3D model
@@ -12,17 +16,22 @@
 #
 # Deliberately not the head camera: the intact head-cam recording belongs to ep000002,
 # and part of it shows a human arm reaching into the printer, which would misrepresent
-# what the robot is doing on a page about automating exactly that.
+# what the robot is doing on a page about automating exactly that. (The printer also
+# occludes the head camera almost completely, which is why the policy leans on the
+# wrist cameras in the first place.)
 #
-# Usage: bash scripts/bake-clip.sh [wrist-source.mkv] [pickup-source.mp4]
+# Sources default to the repo root; raw footage there is gitignored and only the
+# encoded output under public/media/ is committed.
 
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT="$REPO/public/media"
 
-WRIST_SRC="${1:-$HOME/Downloads/bracketbot/dataset_backups/lift_up_the_printer_bed/1789818909_35018_4b1d9b82/datasets__quest_teleop__lift up the printer bed__video__arm_left_ep000000_6d3b9ded_0.mkv}"
-PICKUP_SRC="${2:-$REPO/pickup print object.mp4}"
+WRIST_SRC="${WRIST_SRC:-$HOME/Downloads/bracketbot/dataset_backups/lift_up_the_printer_bed/1789818909_35018_4b1d9b82/datasets__quest_teleop__lift up the printer bed__video__arm_left_ep000000_6d3b9ded_0.mkv}"
+PICKUP_SRC="${PICKUP_SRC:-$REPO/pickup print object.mp4}"
+VLA_SRC="${VLA_SRC:-$REPO/normal speed fully VLA.mp4}"
+TIMELAPSE_SRC="${TIMELAPSE_SRC:-$REPO/print timelapse.mp4}"
 
 mkdir -p "$OUT"
 
@@ -52,9 +61,11 @@ encode() {
 # No webm: VP9 on this noisy fisheye source encoded larger than h264 at matching quality,
 # and h264 plays everywhere, so the second file would be pure weight.
 #
-# pickup is the hero clip and runs large, so it keeps full resolution. wrist-cam only
-# ever renders as a small inset, so it ships at 480px and a looser crf.
-encode "$PICKUP_SRC" pickup 2 26 ""
+# Sized by how large each one actually renders: vla leads the hero, the rest run in a
+# strip beneath it, and wrist-cam is the smallest tile of the four.
+encode "$VLA_SRC" vla 6 28 "scale=-2:960,"
+encode "$TIMELAPSE_SRC" timelapse 10 32 "scale=768:-2,"
+encode "$PICKUP_SRC" pickup 2 27 "scale=560:-2,"
 encode "$WRIST_SRC" wrist-cam 4 29 "scale=480:-2,"
 
 echo

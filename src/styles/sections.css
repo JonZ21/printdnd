@@ -131,20 +131,35 @@
   grid-column: 1 / span 6;
 }
 
-/* The pickup clip leads; the wrist camera sits under it as a second angle. */
+/* The autonomous run leads. It was shot on a phone, so it is portrait: size it from
+   its height and let the width follow, or it blows past the fold. */
 .hero__media {
   grid-column: 8 / span 5;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(0.8rem, 1.6vw, 1.2rem);
+  justify-self: center;
 }
 
-.clip--lead {
+.clip--portrait .clip__frame {
+  height: min(66svh, 660px);
+  width: auto;
+  aspect-ratio: 9 / 16;
+}
+
+.clip--portrait figcaption {
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* The remaining three run as one strip under the hero, on a shared aspect so the row
+   reads as a set of feeds rather than three different shapes. */
+.clip-strip {
   grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.6rem);
 }
 
-.clip--inset {
-  grid-column: 1 / span 2;
+.clip__frame--wide {
+  aspect-ratio: 16 / 10;
 }
 
 .hero__slug {
@@ -155,9 +170,13 @@
   padding-top: 0.8rem;
 }
 
-/* The inset is narrow; its slug must not wrap onto a second line. */
-.clip--inset figcaption {
-  white-space: nowrap;
+code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  color: var(--beam);
+  background: var(--ink-150);
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
 }
 
 .hero__kicker {
@@ -244,7 +263,8 @@
 
 .step {
   border-top: var(--rule);
-  padding-block: clamp(2.2rem, 7vh, 4.5rem);
+  /* Tighter than a scroll-linked sequence would want: all of these are read at once. */
+  padding-block: clamp(1.4rem, 3.4vh, 2.3rem);
   display: grid;
   grid-template-columns: 3.4rem 1fr;
   gap: 0.4rem 1.2rem;
@@ -285,8 +305,10 @@
   grid-column: 1 / span 5;
 }
 
+/* Left half, like everything else in this section: the fixed robot canvas covers the
+   right 54vw, and the spec rows are unreadable through it. */
 .specs {
-  grid-column: 7 / span 6;
+  grid-column: 1 / span 6;
   margin: 0;
   display: grid;
   gap: 0;
@@ -332,130 +354,82 @@
   color: var(--beam);
 }
 
-/* ---------- why it matters ------------------------------------------------ */
+/* ---------- what it does -------------------------------------------------- */
 
-.pitch__lede {
-  grid-column: 1 / span 7;
-  margin-bottom: clamp(2rem, 5vw, 3.4rem);
+.statement {
+  grid-column: 7 / span 6;
+  align-self: end;
 }
 
-.ledger {
+.statement p:last-child {
+  color: var(--muted-bright);
+}
+
+/* ---------- the point ----------------------------------------------------- */
+
+/* One line, given the room to land. Everything else on the page is dense; this
+   section is deliberately the opposite. */
+.manifesto__body {
   grid-column: 1 / span 10;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: clamp(2rem, 8vw, 6rem);
 }
 
-.ledger__column {
-  border-top: 2px solid var(--ink-300);
-  padding-top: 1rem;
+.manifesto__body h2 {
+  font-size: var(--step-3);
+  line-height: 0.95;
 }
 
-.ledger__column:first-child {
-  border-top-color: var(--beam);
+.manifesto__body em {
+  font-style: normal;
+  color: var(--beam);
 }
 
-.ledger__column:last-child {
-  border-top-color: var(--molten);
+.manifesto__body p {
+  margin-top: clamp(1.5rem, 3vw, 2.4rem);
+  font-size: var(--step-1);
+  color: var(--muted-bright);
+  max-width: 40ch;
 }
 
-.ledger__column h3 {
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
-  margin-bottom: 0.9rem;
+/* ---------- what's next --------------------------------------------------- */
+
+.next__lede {
+  grid-column: 1 / span 3;
 }
 
-.ledger__column ul {
+.next-list {
+  grid-column: 5 / span 6;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.ledger__column li {
-  font-size: 0.9375rem;
-  color: rgba(237, 234, 228, 0.82);
-  padding-block: 0.5rem;
+.next-list li {
   border-top: var(--rule);
-}
-
-.ledger__column li:first-child {
-  border-top: 0;
-}
-
-/* ---------- team ---------------------------------------------------------- */
-
-.team {
-  grid-column: 1 / -1;
+  padding-block: 0.95rem;
+  font-size: 1rem;
+  color: rgba(237, 234, 228, 0.86);
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--ink-200);
-  border-block: var(--rule);
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.8rem;
 }
 
-.team__member {
-  background: var(--ink-000);
-  padding: clamp(1.3rem, 2.6vw, 2rem) 1.2rem clamp(1.1rem, 2.2vw, 1.6rem);
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.team__initial {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: clamp(3.4rem, 7vw, 5.6rem);
-  line-height: 0.8;
-  color: var(--ink-300);
-  margin-bottom: 0.7rem;
-}
-
-.team__name {
-  font-family: var(--display);
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 1.32rem;
-  letter-spacing: 0.015em;
-}
-
-.team__role {
+.next-list li::before {
+  content: "→";
+  color: var(--molten);
   font-family: var(--mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.7;
 }
 
-/* ---------- contact ------------------------------------------------------- */
+/* ---------- door hanger -------------------------------------------------- */
 
-.contact {
-  grid-column: 1 / span 7;
-  margin-top: clamp(3rem, 8vw, 6rem);
-}
-
-.contact a {
-  font-family: var(--display);
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: var(--step-2);
-  letter-spacing: -0.015em;
-  text-decoration: none;
-  color: var(--paper);
-  border-bottom: 2px solid var(--ink-300);
-  transition: border-color 200ms ease, color 200ms ease;
-}
-
-.contact a:hover {
-  color: var(--beam);
-  border-bottom-color: var(--beam);
-}
-
-/* The door hanger. Slightly off-square on purpose. */
+/* Tucked into the empty column beside the list rather than left stranded below it. */
 .hanger {
-  grid-column: 9 / span 4;
-  justify-self: end;
+  grid-column: 1 / span 3;
+  justify-self: start;
   align-self: start;
-  margin-top: clamp(3rem, 8vw, 6rem);
+  margin-top: clamp(2rem, 5vw, 3.5rem);
   transform: rotate(-2.5deg);
   border: 1px solid var(--ink-300);
   background: var(--ink-150);
@@ -524,9 +498,15 @@
   .steps,
   .reset__intro,
   .telemetry,
-  .pitch__lede,
-  .ledger,
-  .contact {
+  .statement,
+  .manifesto__body {
+    grid-column: 1 / span 11;
+  }
+  .next__lede {
+    grid-column: 1 / span 11;
+    margin-bottom: 1.6rem;
+  }
+  .next-list {
     grid-column: 1 / span 11;
   }
   .hanger {
@@ -553,18 +533,12 @@
   .hero__media {
     grid-column: 1 / -1;
   }
-  #reset::before {
+  #built::before {
     content: "";
     position: absolute;
     inset: 0 -50%;
     background: radial-gradient(ellipse at 40% 50%, rgba(10, 10, 11, 0.86) 30%, transparent 72%);
     z-index: -1;
-  }
-  .team {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .ledger {
-    grid-template-columns: minmax(0, 1fr);
   }
   .steps,
   .reset__intro,
@@ -572,22 +546,26 @@
   .machine__lede,
   .specs,
   .provenance,
-  .pitch__lede,
-  .ledger,
-  .contact,
+  .statement,
+  .manifesto__body,
+  .next__lede,
+  .next-list,
   .hanger {
     grid-column: 1 / -1;
   }
   .step {
     grid-template-columns: 2.6rem 1fr;
   }
-  /* Both clips go full width and sit side by side as a pair of feeds. */
-  .hero__media {
+  /* The strip stacks two-up; the third tile runs full width beneath them. */
+  .clip-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .clip--lead,
-  .clip--inset {
-    grid-column: span 1;
+  .clip-strip .clip:last-child {
+    grid-column: 1 / -1;
+  }
+  .clip--portrait .clip__frame {
+    height: auto;
+    width: 100%;
   }
   .clip figcaption {
     font-size: 0.8125rem;

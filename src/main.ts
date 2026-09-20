@@ -65,33 +65,14 @@ if (reducedMotion) {
 
 const stage = document.querySelector<HTMLElement>("#robot-stage");
 const canvas = document.querySelector<HTMLCanvasElement>("#robot-canvas");
-const steps = Array.from(document.querySelectorAll<HTMLElement>("[data-step]"));
-const resetSection = document.querySelector<HTMLElement>("#reset");
+// The robot lives alongside "how we built it", where the recorded episode is the point.
+const robotSection = document.querySelector<HTMLElement>("#built");
 
 const frameEl = document.querySelector<HTMLElement>("#tm-frame");
 const totalEl = document.querySelector<HTMLElement>("#tm-total");
 const timeEl = document.querySelector<HTMLElement>("#tm-time");
 
 const pad = (value: number, width: number) => String(value).padStart(width, "0");
-
-function markActiveStep() {
-  if (steps.length === 0) return;
-  const focus = window.innerHeight * 0.46;
-  let best = -1;
-  let bestDistance = Number.POSITIVE_INFINITY;
-
-  steps.forEach((step, index) => {
-    const box = step.getBoundingClientRect();
-    if (box.bottom < 0 || box.top > window.innerHeight) return;
-    const distance = Math.abs(box.top + box.height / 2 - focus);
-    if (distance < bestDistance) {
-      bestDistance = distance;
-      best = index;
-    }
-  });
-
-  steps.forEach((step, index) => step.classList.toggle("is-active", index === best));
-}
 
 async function start() {
   if (!stage || !canvas) return;
@@ -125,27 +106,25 @@ async function start() {
   const onScroll = () => {
     const viewport = window.innerHeight;
 
-    if (resetSection) {
-      const top = resetSection.offsetTop;
-      const bottom = top + resetSection.offsetHeight;
+    if (!robotSection) return;
 
-      // The episode is scrubbed across the reset section: it starts as the section
-      // comes into view and finishes as the last step leaves.
-      const from = top - viewport * 0.75;
-      const to = bottom - viewport * 0.6;
-      handle.setProgress(to > from ? clamp01((window.scrollY - from) / (to - from)) : 0);
+    const top = robotSection.offsetTop;
+    const bottom = top + robotSection.offsetHeight;
 
-      // Visibility is driven by how much of the reset section the viewport is actually
-      // showing, which behaves the same on a short phone hero as on a wide desktop one.
-      // Keying it to scroll offsets instead lets the robot bleed into the hero whenever
-      // the viewport is taller than the hero.
-      const rect = resetSection.getBoundingClientRect();
-      const shown = Math.min(rect.bottom, viewport) - Math.max(rect.top, 0);
-      const coverage = clamp01(shown / Math.min(rect.height, viewport));
-      canvas.style.opacity = clamp01((coverage - 0.45) / 0.3).toFixed(3);
-    }
+    // The episode is scrubbed across the section: it starts as the section comes into
+    // view and finishes as the last of it leaves.
+    const from = top - viewport * 0.75;
+    const to = bottom - viewport * 0.6;
+    handle.setProgress(to > from ? clamp01((window.scrollY - from) / (to - from)) : 0);
 
-    markActiveStep();
+    // Visibility is driven by how much of the section the viewport is actually showing,
+    // which behaves the same on a short phone hero as on a wide desktop one. Keying it
+    // to scroll offsets instead lets the robot bleed into the hero whenever the
+    // viewport is taller than the hero.
+    const rect = robotSection.getBoundingClientRect();
+    const shown = Math.min(rect.bottom, viewport) - Math.max(rect.top, 0);
+    const coverage = clamp01(shown / Math.min(rect.height, viewport));
+    canvas.style.opacity = clamp01((coverage - 0.45) / 0.3).toFixed(3);
   };
 
   let ticking = false;

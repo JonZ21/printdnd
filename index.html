@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Print D&amp;D — the printer resets itself</title>
+    <title>Print D&amp;D — we do the R&amp;D, so you can stay on DND</title>
     <meta
       name="description"
-      content="Print D&amp;D puts a BracketBot next to the 3D printer. When a job finishes it lifts the bed, takes the part out and starts the next print. Do Not Disturb."
+      content="PrintDND is a robot that autonomously clears a 3D printer from its previous job and places the print where you want it. Built on BracketBot at Hack the North."
     />
     <meta name="theme-color" content="#0a0a0b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -14,10 +14,10 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://printdnd.ca/" />
-    <meta property="og:title" content="Print D&amp;D — the printer resets itself" />
+    <meta property="og:title" content="Print D&amp;D — we do the R&amp;D, so you can stay on DND" />
     <meta
       property="og:description"
-      content="A robot that lifts the bed, takes the part out and starts the next print. Do Not Disturb."
+      content="A robot that clears the printer on its own and puts the print where you want it. Do Not Disturb."
     />
 
     <link rel="preload" href="/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin />
@@ -37,10 +37,10 @@
           <span class="wordmark__expansion">Do Not Disturb</span>
         </a>
         <nav class="masthead__nav" aria-label="Sections">
-          <a href="#reset">The reset</a>
-          <a href="#machine">The machine</a>
-          <a href="#why">Why</a>
-          <a href="#team">Team</a>
+          <a href="#what">What it does</a>
+          <a href="#built">How we built it</a>
+          <a href="#broke">What broke</a>
+          <a href="#next">What's next</a>
         </nav>
       </header>
 
@@ -49,23 +49,22 @@
         <section class="shell hero">
           <div class="grid hero__grid">
             <div class="hero__body">
-              <p class="mono hero__kicker">A robot that clears the bed</p>
+              <p class="mono hero__kicker">Hack the North · built on BracketBot</p>
               <h1>
-                Your printer finishes<br />
-                at 2&nbsp;a.m. It should<br />
-                start again at <em>2:01</em>.
+                We do the R&amp;D,<br />
+                so you can stay<br />
+                on <em>DND</em>.
               </h1>
-              <!-- Line breaks are set by hand for the six-column measure; if the type
-                   scale changes, re-check them rather than letting it wrap. -->
               <p class="hero__standfirst">
-                When a job ends, the robot lifts the bed, takes the part out and sets the
-                machine up for the next one. The gap between prints stops being dead
-                time, and nobody has to be in the room.
+                Some of us have woken up in the middle of the night, stumbled from room to
+                room and lost hours resetting 3D printers. PrintDND clears the printer on
+                its own and puts the print where you want it, so printing carries on while
+                you stay on Do Not Disturb.
               </p>
             </div>
 
             <div class="hero__media">
-              <figure class="clip clip--lead">
+              <figure class="clip clip--portrait">
                 <div class="clip__frame">
                   <video
                     data-clip
@@ -73,26 +72,78 @@
                     loop
                     playsinline
                     preload="auto"
-                    poster="/media/pickup-poster.jpg"
-                    aria-label="The robot's gripper closing on a finished part, lifting it off the print plate and setting it down"
+                    poster="/media/vla-poster.jpg"
+                    aria-label="PrintDND autonomously clearing a finished print from a 3D printer"
                   >
-                    <source src="/media/pickup.mp4" type="video/mp4" />
+                    <source src="/media/vla.mp4" type="video/mp4" />
                   </video>
                 </div>
                 <figcaption>
-                  <span>Picking a finished part off the plate.</span>
-                  <span class="mono">pickup · 6.9s</span>
+                  <span>Clearing the bed on its own. Normal speed.</span>
+                  <span class="mono">fully autonomous · 30s</span>
                 </figcaption>
               </figure>
+            </div>
 
-              <figure class="clip clip--inset">
-                <div class="clip__frame">
+            <p class="mono hero__slug">
+              <span class="telemetry__dot"></span>No teleoperation in that clip · the
+              policy is driving
+            </p>
+          </div>
+        </section>
+
+        <!-- --------------------------------------------------- clip strip -->
+        <section class="shell" aria-label="More footage">
+          <div class="grid">
+            <div class="clip-strip" data-reveal>
+              <figure class="clip">
+                <div class="clip__frame clip__frame--wide">
                   <video
                     data-clip
                     muted
                     loop
                     playsinline
-                    preload="metadata"
+                    preload="none"
+                    poster="/media/timelapse-poster.jpg"
+                    aria-label="Timelapse of the team building PrintDND on the hackathon floor"
+                  >
+                    <source src="/media/timelapse.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <figcaption>
+                  <span>The build, compressed.</span>
+                  <span class="mono">timelapse</span>
+                </figcaption>
+              </figure>
+
+              <figure class="clip">
+                <div class="clip__frame clip__frame--wide">
+                  <video
+                    data-clip
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster="/media/pickup-poster.jpg"
+                    aria-label="The robot's gripper closing on a finished part and lifting it off the plate"
+                  >
+                    <source src="/media/pickup.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <figcaption>
+                  <span>Lifting a part off the plate.</span>
+                  <span class="mono">gripper cam</span>
+                </figcaption>
+              </figure>
+
+              <figure class="clip">
+                <div class="clip__frame clip__frame--wide">
+                  <video
+                    data-clip
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
                     poster="/media/wrist-cam-poster.jpg"
                     aria-label="View from the robot's left wrist camera as it approaches a print bed"
                   >
@@ -100,64 +151,82 @@
                   </video>
                 </div>
                 <figcaption>
+                  <span>What the wrist sees.</span>
                   <span class="mono">arm_left · ep000000</span>
                 </figcaption>
               </figure>
             </div>
-
-            <p class="mono hero__slug">
-              <span class="telemetry__dot"></span>Recorded · the robot's own gripper
-              cameras · unedited apart from compression
-            </p>
           </div>
         </section>
 
-        <!-- --------------------------------------------------- the reset -->
-        <section class="shell" id="reset">
+        <!-- ------------------------------------------------- what it does -->
+        <section class="shell" id="what">
           <div class="grid">
             <div class="section-mark">
               <span class="section-mark__index">01</span>
-              <span class="section-mark__label">The reset</span>
+              <span class="section-mark__label">What it does</span>
+            </div>
+
+            <div class="machine__lede" data-reveal>
+              <h2>Introducing<br />PrintDND.</h2>
+            </div>
+
+            <div class="statement" data-reveal>
+              <p>
+                A robot that autonomously clears the printer from its previous job and
+                places the print down in a desired location. That's the whole idea. It
+                means printing can keep going while you're asleep, out, or on Do Not
+                Disturb.
+              </p>
+              <p>
+                It isn't a script. The robot is running a learned policy, so when it
+                misses a grasp it simply tries again.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ----------------------------------------------- how we built it -->
+        <section class="shell" id="built">
+          <div class="grid">
+            <div class="section-mark">
+              <span class="section-mark__index">02</span>
+              <span class="section-mark__label">How we built it</span>
             </div>
 
             <div class="reset__intro" data-reveal>
-              <h2>Four moves,<br />then it goes again.</h2>
+              <h2>Teleoperate,<br />then hand it over.</h2>
               <p style="margin-top: 1.5rem">
-                The robot works the printer the way a person would, because the printer
-                was built for a person. Scroll to run the recording.
+                The robot came from BracketBot, a Hack the North sponsor: bimanual, 7-DOF
+                per arm, on a two-wheel base that uses reinforcement learning to keep
+                itself upright.
+              </p>
+              <p>
+                We took that stack and broke the job down from first principles — the
+                rudimentary movements needed to get a print off a plate. Then we collected
+                data by teleoperating the robot with a Meta Quest 3S, over 100 episodes,
+                stored in BracketBot's cloud.
+              </p>
+              <p>
+                We audited that data for quality and used it to fine-tune Physical
+                Intelligence's PI0.5 vision-language-action model, then built on the
+                deployment stack to run inference. On top of the reset we wired up a wake
+                word: say <strong>"Hey BracketBot, reset the printer"</strong> and it
+                listens, answers, and goes.
               </p>
             </div>
 
-            <ol class="steps" id="steps">
-              <li class="step" data-step>
-                <span class="step__index">01</span>
-                <div>
-                  <h3>Lift</h3>
-                  <p>Take hold of the print bed and lift it clear.</p>
-                </div>
-              </li>
-              <li class="step" data-step>
-                <span class="step__index">02</span>
-                <div>
-                  <h3>Remove</h3>
-                  <p>Take the finished part off the plate.</p>
-                </div>
-              </li>
-              <li class="step" data-step>
-                <span class="step__index">03</span>
-                <div>
-                  <h3>Clear</h3>
-                  <p>Set the part aside, out of the build volume.</p>
-                </div>
-              </li>
-              <li class="step" data-step>
-                <span class="step__index">04</span>
-                <div>
-                  <h3>Reset</h3>
-                  <p>Put the plate back and send the next job.</p>
-                </div>
-              </li>
-            </ol>
+            <dl class="specs" data-reveal>
+              <div><dt>Platform</dt><dd>BracketBot</dd></div>
+              <div><dt>Arms</dt><dd>bimanual, 7-DOF each</dd></div>
+              <div><dt>Base</dt><dd>2 wheels, RL balance</dd></div>
+              <div><dt>Teleoperation</dt><dd>Meta Quest 3S</dd></div>
+              <div><dt>Episodes collected</dt><dd>100+</dd></div>
+              <div><dt>Policy</dt><dd>PI0.5 VLA, fine-tuned</dd></div>
+              <div><dt>Inference</dt><dd>Montreal servers</dd></div>
+              <div><dt>Voice</dt><dd>"Hey BracketBot" wake word</dd></div>
+              <div><dt>Printer</dt><dd>Bambu Lab X1 Carbon</dd></div>
+            </dl>
 
             <div class="telemetry" id="telemetry">
               <span class="telemetry__item">
@@ -168,121 +237,132 @@
               <span class="telemetry__item">frame <b id="tm-frame">000</b>/<span id="tm-total">000</span></span>
               <span class="telemetry__item">t <b id="tm-time">0.0</b>s</span>
             </div>
-          </div>
-        </section>
-
-        <!-- ----------------------------------------------- the machine -->
-        <section class="shell" id="machine">
-          <div class="grid">
-            <div class="section-mark">
-              <span class="section-mark__index">02</span>
-              <span class="section-mark__label">The machine</span>
-            </div>
-
-            <div class="machine__lede" data-reveal>
-              <h2>Built on<br />BracketBot.</h2>
-              <p style="margin-top: 1.5rem">
-                BracketBot is a two-wheeled, self-balancing robot. We didn't build the
-                platform — we built what it does at the printer. Everything below is
-                visible in a photograph of our machine or is a channel in our own logs.
-              </p>
-            </div>
-
-            <dl class="specs" data-reveal>
-              <div><dt>Head</dt><dd>stereo camera pair</dd></div>
-              <div><dt>Arms</dt><dd>2 × 8 actuated joints</dd></div>
-              <div><dt>End effector</dt><dd>parallel-jaw gripper</dd></div>
-              <div><dt>Additional cameras</dt><dd>wrist + upper arm</dd></div>
-              <div><dt>Base</dt><dd>2 drive motors, IMU-stabilised</dd></div>
-              <div><dt>Demonstrations</dt><dd>recorded by VR teleop</dd></div>
-              <div><dt>Printer in the footage</dt><dd>Bambu Lab X1 Carbon</dd></div>
-            </dl>
 
             <p class="provenance" data-reveal>
+              The robot alongside is replaying one of those recorded episodes — joint
+              angles, gripper state and body lean are all logged values, not keyframes.
               Platform:
               <a href="https://bracketbot.com" target="_blank" rel="noopener">bracketbot.com</a>.
-              The motion above is played back from our own teleop logs, not animated by
-              hand.
             </p>
           </div>
         </section>
 
-        <!-- ------------------------------------------------ why it matters -->
-        <section class="shell" id="why">
+        <!-- ------------------------------------------------------ what broke -->
+        <section class="shell" id="broke">
           <div class="grid">
             <div class="section-mark">
               <span class="section-mark__index">03</span>
-              <span class="section-mark__label">Why it matters</span>
+              <span class="section-mark__label">What broke</span>
             </div>
 
-            <div class="pitch__lede" data-reveal>
-              <h2>The bed is the first thing.<br />It isn't the last.</h2>
+            <div class="reset__intro" data-reveal>
+              <h2>What broke.</h2>
               <p style="margin-top: 1.5rem">
-                Print farms solve throughput by buying more printers. Nobody has taken out
-                the minute of human attention each machine needs between jobs. Take that
-                out and how hard a printer runs stops depending on who's awake.
+                Most of the weekend was spent here, so it would be strange not to say so.
               </p>
             </div>
 
-            <div class="ledger" data-reveal>
-              <div class="ledger__column">
-                <h3>Running today</h3>
-                <ul>
-                  <li>A BracketBot working alongside a Bambu Lab X1 Carbon</li>
-                  <li>Teleoperated bed lifts and part pickups, recorded and logged</li>
-                  <li>The episode being replayed on this page</li>
-                </ul>
-              </div>
-              <div class="ledger__column">
-                <h3>Where it goes</h3>
-                <ul>
-                  <li>The reset running without a person driving it</li>
-                  <li>Swapping filament when a spool runs out</li>
-                  <li>Queueing work across several machines</li>
-                </ul>
-              </div>
-            </div>
-
-            <p class="provenance" data-reveal style="grid-column: 1 / span 10">
-              The right-hand column is what we're building toward, not what we're selling.
-              Items move left when they actually work.
-            </p>
+            <ol class="steps" data-reveal>
+              <li class="step is-active">
+                <span class="step__index">01</span>
+                <div>
+                  <h3>The wifi</h3>
+                  <p>
+                    HTN, eduroam and even Starlink were spotty and inconsistent. We moved
+                    the entire setup three separate times, and each time the failure
+                    looked slightly different — pairing the Quest, uploading to the cloud,
+                    or just holding an SSH session.
+                  </p>
+                </div>
+              </li>
+              <li class="step is-active">
+                <span class="step__index">02</span>
+                <div>
+                  <h3>Losing 75% of our data</h3>
+                  <p>
+                    There's a local <code>/pending</code> folder that holds recordings
+                    until the bot can upload them. It has a cap, and past that it silently
+                    overwrites. We found that out far too late, after recording a long
+                    stretch with no wifi.
+                  </p>
+                </div>
+              </li>
+              <li class="step is-active">
+                <span class="step__index">03</span>
+                <div>
+                  <h3>A 2kg gripper and a stiff plate</h3>
+                  <p>
+                    The grippers top out around 2kg, well under what it takes to lift the
+                    magnetic build plate. So we printed a jig that flexes the plate
+                    instead and shakes the print loose — much less force, same result.
+                  </p>
+                </div>
+              </li>
+              <li class="step is-active">
+                <span class="step__index">04</span>
+                <div>
+                  <h3>A blind head camera</h3>
+                  <p>
+                    The printer occludes the head camera almost perfectly, so the policy
+                    leans on the wrist cameras — and depth is hard to judge from one view.
+                    Early on, home position looked so much like the lift pose that the
+                    robot decided it had already finished before starting.
+                  </p>
+                </div>
+              </li>
+              <li class="step is-active">
+                <span class="step__index">05</span>
+                <div>
+                  <h3>Speed</h3>
+                  <p>
+                    Planning every joint angle takes real compute. Running inference on
+                    Montreal servers took the edge off, but the robot still moves slowly.
+                    We're chasing something closer to home.
+                  </p>
+                </div>
+              </li>
+            </ol>
           </div>
         </section>
 
-        <!-- ------------------------------------------------------- team -->
-        <section class="shell" id="team">
+        <!-- ------------------------------------------- robots build robots -->
+        <section class="shell manifesto" id="vision">
           <div class="grid">
             <div class="section-mark">
               <span class="section-mark__index">04</span>
-              <span class="section-mark__label">Team</span>
+              <span class="section-mark__label">The point</span>
             </div>
 
-            <!-- TODO: add a role/title line per person, and photos if you want them. -->
-            <div class="team" data-reveal>
-              <div class="team__member">
-                <span class="team__initial" aria-hidden="true">M</span>
-                <span class="team__name">Makis</span>
-              </div>
-              <div class="team__member">
-                <span class="team__initial" aria-hidden="true">I</span>
-                <span class="team__name">Iris</span>
-              </div>
-              <div class="team__member">
-                <span class="team__initial" aria-hidden="true">M</span>
-                <span class="team__name">Matthew</span>
-              </div>
-              <div class="team__member">
-                <span class="team__initial" aria-hidden="true">J</span>
-                <span class="team__name">Jonathan</span>
-              </div>
+            <div class="manifesto__body" data-reveal>
+              <h2>
+                We envision a world<br />
+                where <em>robots build robots</em>.
+              </h2>
+              <p>3D printing is where we started. It isn't where this stops.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- -------------------------------------------------- what's next -->
+        <section class="shell" id="next">
+          <div class="grid">
+            <div class="section-mark">
+              <span class="section-mark__index">05</span>
+              <span class="section-mark__label">What's next</span>
             </div>
 
-            <div class="contact" data-reveal>
-              <p class="mono" style="margin-bottom: 0.9rem">Get in touch</p>
-              <!-- TODO: replace with the real address before launch. -->
-              <a href="#" data-todo>TODO — add contact email</a>
+            <div class="next__lede" data-reveal>
+              <h2>Next.</h2>
             </div>
+
+            <ul class="next-list" data-reveal>
+              <li>The rest of the workflow — the door, filament changes, diverse print geometries</li>
+              <li>Navigation from printer to printer</li>
+              <li>Dynamic height detection for different printer setups</li>
+              <li>Making the robot faster</li>
+              <li>An exponential moving average, for smoother movement</li>
+              <li>From print removal to full robot assembly</li>
+            </ul>
 
             <aside class="hanger" data-reveal aria-hidden="true">
               <div class="hanger__hole"></div>
