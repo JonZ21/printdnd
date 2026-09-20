@@ -162,11 +162,15 @@ export async function mountRobot(canvas: HTMLCanvasElement): Promise<RobotHandle
   let running = true;
   let visible = true;
   let animationId = 0;
+  let elapsed = 0;
   const clock = new THREE.Clock();
 
   const render = () => {
-    const elapsed = clock.getElapsedTime();
+    // getDelta() only, accumulating elapsed ourselves. THREE.Clock.getElapsedTime()
+    // calls getDelta() internally, so asking for both in the same frame leaves the
+    // second call returning ~0 and the smoothing below never advances.
     const delta = Math.min(clock.getDelta(), 0.1);
+    elapsed += delta;
 
     shownProgress += (targetProgress - shownProgress) * Math.min(delta * 6, 1);
 

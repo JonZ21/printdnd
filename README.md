@@ -26,36 +26,45 @@ can't be shipped by accident:
 - **Team roles** — the four names render without titles. There's a comment above the
   block if you want to add a role line per person, or photos.
 
-## The robot is replaying real data
+## Everything on the page is real footage or real data
 
-The 3D model is not animated by hand. `public/data/episode.json` is baked from
-**ep000000** of the team's own `quest_teleop / "lift up the printer bed"` dataset — a
-12.0s take where both arms tracked throughout, both grippers closed 0 → 1, and the end
-effector travelled about 20cm. Scrolling scrubs through it. Arm joint angles, gripper
-state and body lean are all recorded values.
+**The hero is two clips from the robot's own gripper cameras.** `pickup` is the lead — it
+closes on a finished part, lifts it off the plate and sets it down, which is the entire
+pitch in seven seconds. `wrist-cam` sits under it as a second angle.
+
+**The 3D model in *The reset* is not animated by hand.** `public/data/episode.json` is
+baked from **ep000000** of the team's own `quest_teleop / "lift up the printer bed"`
+dataset — a 12.0s take where both arms tracked throughout, both grippers closed 0 → 1,
+and the end effector travelled about 20cm. Scrolling through that section scrubs the
+episode start to finish; arm joint angles, gripper state and body lean are all recorded
+values. The `wrist-cam` clip is the same episode, so the model and that clip are two
+views of one recording.
 
 Two display gains are applied in `src/three/playback.ts`, and they are the only liberties
 taken. `JOINT_GAIN` scales the recorded joint deltas (which span 1–12°, close to
 invisible at the size the robot renders) and `BODY_GAIN` damps the IMU trace (played 1:1
 the robot appears to topple). Both scale the real signal; neither invents one.
 
-The clip in *What it sees* is the left wrist camera from the **same** episode, so the
-model and the footage are two views of one recording.
-
 ### Re-baking the data
 
-Both scripts read from the dataset in `~/Downloads/bracketbot/` by default and write
-committed artefacts into `public/`. You only need them if you want to swap in a different
-episode.
+These write committed artefacts into `public/`. You only need them to swap in different
+footage.
 
 ```
-npm run bake:episode    # .npz  -> public/data/episode.json      (~55KB)
-npm run bake:clip       # .mkv  -> public/media/wrist-cam.mp4    (~1MB, needs ffmpeg)
+npm run bake:episode    # .npz -> public/data/episode.json   (~55KB)
+npm run bake:clip       # -> public/media/{pickup,wrist-cam}.mp4 + posters (needs ffmpeg)
 ```
 
-Pass a path as the first argument to use a different recording. Note that the head-camera
-recording for ep000000 is truncated (87 of 355 frames decode) — that's why the wrist
-camera is used instead.
+`bake-episode.py` takes the `.npz` path as its first argument. `bake-clip.sh` takes the
+wrist source first and the pickup source second; by default it looks for the teleop
+dataset under `~/Downloads/bracketbot/` and for `pickup print object.mp4` in the repo
+root. Raw footage dropped in the repo root is gitignored — only the encoded versions
+under `public/media/` are committed.
+
+Note that the head-camera recording for ep000000 is truncated (87 of 355 frames decode),
+which is why the wrist camera is used instead. The intact head-cam recording belongs to
+ep000002 and part of it shows a human arm reaching into the printer, which would
+misrepresent what the robot is doing.
 
 ## Two rules the site is built on
 
@@ -88,12 +97,12 @@ deliberately differ in column span and vertical rhythm so no two read the same.
 ## Layout of the code
 
 ```
-index.html              all copy, semantic sections
+index.html              all copy. hero + 4 numbered sections
 scripts/
   bake-episode.py       npz -> episode.json
-  bake-clip.sh          mkv -> wrist-cam.mp4 + poster
+  bake-clip.sh          raw footage -> web-ready mp4s + posters
 src/
-  main.ts               smooth scroll, reveals, scroll -> episode progress
+  main.ts               smooth scroll, reveals, clip playback, scroll -> episode
   styles/               tokens, base, layout, sections
   three/
     scene.ts            renderer, lights, environment, bloom, frame loop
@@ -102,6 +111,9 @@ src/
     playback.ts         episode -> rig
 ```
 
+The page is: **hero** (clips) → **01 the reset** (steps + the 3D robot) → **02 the
+machine** (specs) → **03 why it matters** (ledger) → **04 team**.
+
 `src/three/materials.ts` computes the FDM layer banding from world-space height in the
 shader rather than from a texture, so the layer pitch stays constant across every part
 regardless of how each piece was built or scaled.
@@ -109,10 +121,14 @@ regardless of how each piece was built or scaled.
 ### Behaviour worth knowing
 
 - `prefers-reduced-motion: reduce` → one static pose, no frame loop, no scroll scrubbing,
-  and the clip stays on its poster with controls exposed.
+  and both clips stay on their posters with controls exposed.
+- The robot's opacity is driven by how much of the reset section the viewport is showing,
+  not by scroll offsets. Offsets let it bleed into the hero whenever the viewport is
+  taller than the hero, which is the normal case on a phone.
 - The frame loop pauses when the canvas scrolls out of view or the tab is hidden.
-- Under 860px the robot moves behind the text at low opacity, bloom is off and segment
-  counts drop.
+- Clips play and pause on an `IntersectionObserver` so nothing decodes off screen.
+- Under 860px the robot moves behind the steps at low opacity, the two clips sit side by
+  side, bloom is off and segment counts drop.
 - No WebGL → the canvas is hidden and a still frame shows instead.
 - The canvas clears transparent and its edges are feathered in CSS. An opaque clear set to
   the page colour does **not** work: it passes through ACES tone mapping and comes out

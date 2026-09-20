@@ -6,3 +6,8 @@ dist
 
 # Scratch output from the bake scripts (the committed artefacts live in public/)
 scripts/_scratch/
+
+# Raw camera footage dropped in the repo root. Only the encoded versions under
+# public/media/ are committed -- see scripts/bake-clip.sh.
+/*.mp4
+/*.mkv

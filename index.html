@@ -47,7 +47,7 @@
       <main id="top">
         <!-- ---------------------------------------------------------- hero -->
         <section class="shell hero">
-          <div class="grid">
+          <div class="grid hero__grid">
             <div class="hero__body">
               <p class="mono hero__kicker">A robot that clears the bed</p>
               <h1>
@@ -55,51 +55,60 @@
                 at 2&nbsp;a.m. It should<br />
                 start again at <em>2:01</em>.
               </h1>
+              <!-- Line breaks are set by hand for the six-column measure; if the type
+                   scale changes, re-check them rather than letting it wrap. -->
               <p class="hero__standfirst">
-                We put a robot next to the printer. When a job ends it lifts the bed,
-                takes the part out, and sets the machine up for the next one. Nobody has
-                to be in the room.
-              </p>
-
-              <div class="telemetry" id="telemetry">
-                <span class="telemetry__item">
-                  <span class="telemetry__dot"></span>Replaying
-                </span>
-                <span class="telemetry__item">src <b>quest_teleop / lift up the printer bed</b></span>
-                <span class="telemetry__item">ep <b>000000</b></span>
-                <span class="telemetry__item">frame <b id="tm-frame">000</b>/<span id="tm-total">000</span></span>
-                <span class="telemetry__item">t <b id="tm-time">0.0</b>s</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ----------------------------------------------------- the gap -->
-        <section class="shell" id="gap">
-          <div class="grid">
-            <div class="section-mark">
-              <span class="section-mark__index">01</span>
-              <span class="section-mark__label">The gap</span>
-            </div>
-
-            <div class="gap__lede" data-reveal>
-              <h2>A finished print<br />is a stopped printer.</h2>
-              <p style="margin-top: 1.6rem">
-                The machine is fine. The filament is fine. The queue is full. It stops
-                because getting a part off a plate is a job for hands, and hands go home.
-              </p>
-              <p>
-                Whatever that gap turns out to be — an hour, a night, a long weekend — it
-                is dead time on a machine that was ready to keep going.
+                When a job ends, the robot lifts the bed, takes the part out and sets the
+                machine up for the next one. The gap between prints stops being dead
+                time, and nobody has to be in the room.
               </p>
             </div>
 
-            <div class="gap__aside" data-reveal>
-              <p>
-                This is the whole problem we started on. Not printing faster. Just not
-                waiting.
-              </p>
+            <div class="hero__media">
+              <figure class="clip clip--lead">
+                <div class="clip__frame">
+                  <video
+                    data-clip
+                    muted
+                    loop
+                    playsinline
+                    preload="auto"
+                    poster="/media/pickup-poster.jpg"
+                    aria-label="The robot's gripper closing on a finished part, lifting it off the print plate and setting it down"
+                  >
+                    <source src="/media/pickup.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <figcaption>
+                  <span>Picking a finished part off the plate.</span>
+                  <span class="mono">pickup · 6.9s</span>
+                </figcaption>
+              </figure>
+
+              <figure class="clip clip--inset">
+                <div class="clip__frame">
+                  <video
+                    data-clip
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    poster="/media/wrist-cam-poster.jpg"
+                    aria-label="View from the robot's left wrist camera as it approaches a print bed"
+                  >
+                    <source src="/media/wrist-cam.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <figcaption>
+                  <span class="mono">arm_left · ep000000</span>
+                </figcaption>
+              </figure>
             </div>
+
+            <p class="mono hero__slug">
+              <span class="telemetry__dot"></span>Recorded · the robot's own gripper
+              cameras · unedited apart from compression
+            </p>
           </div>
         </section>
 
@@ -107,7 +116,7 @@
         <section class="shell" id="reset">
           <div class="grid">
             <div class="section-mark">
-              <span class="section-mark__index">02</span>
+              <span class="section-mark__index">01</span>
               <span class="section-mark__label">The reset</span>
             </div>
 
@@ -149,47 +158,15 @@
                 </div>
               </li>
             </ol>
-          </div>
-        </section>
 
-        <!-- ------------------------------------------------- what it sees -->
-        <section class="shell" id="sees">
-          <div class="grid">
-            <div class="section-mark">
-              <span class="section-mark__index">03</span>
-              <span class="section-mark__label">What it sees</span>
-            </div>
-
-            <div class="footage" data-reveal>
-              <h2>Its own camera,<br />on the real thing.</h2>
-
-              <div class="footage__layout">
-                <div class="footage__frame">
-                  <video
-                    id="wrist-cam"
-                    muted
-                    loop
-                    playsinline
-                    preload="none"
-                    poster="/media/wrist-cam-poster.jpg"
-                    aria-label="View from the robot's left wrist camera as it approaches a print bed"
-                  >
-                    <source src="/media/wrist-cam.mp4" type="video/mp4" />
-                  </video>
-                </div>
-
-                <div class="footage__meta">
-                  <p>
-                    The left wrist camera during the same episode the model above is
-                    replaying. The white jaws with the black pads are the gripper; the
-                    dark textured surface is the build plate.
-                  </p>
-                  <p>Unedited apart from compression.</p>
-                  <p class="mono footage__slug">
-                    arm_left<br />ep000000<br />640 × 480 · 30 fps<br />9.7 s
-                  </p>
-                </div>
-              </div>
+            <div class="telemetry" id="telemetry">
+              <span class="telemetry__item">
+                <span class="telemetry__dot"></span>Replaying
+              </span>
+              <span class="telemetry__item">src <b>quest_teleop / lift up the printer bed</b></span>
+              <span class="telemetry__item">ep <b>000000</b></span>
+              <span class="telemetry__item">frame <b id="tm-frame">000</b>/<span id="tm-total">000</span></span>
+              <span class="telemetry__item">t <b id="tm-time">0.0</b>s</span>
             </div>
           </div>
         </section>
@@ -198,7 +175,7 @@
         <section class="shell" id="machine">
           <div class="grid">
             <div class="section-mark">
-              <span class="section-mark__index">04</span>
+              <span class="section-mark__index">02</span>
               <span class="section-mark__label">The machine</span>
             </div>
 
@@ -206,12 +183,8 @@
               <h2>Built on<br />BracketBot.</h2>
               <p style="margin-top: 1.5rem">
                 BracketBot is a two-wheeled, self-balancing robot. We didn't build the
-                platform — we built what it does at the printer.
-              </p>
-              <p>
-                Everything in this list is something we can point at in a photograph of
-                our own machine or in the channel list of our own recordings. There is
-                nothing here we haven't touched.
+                platform — we built what it does at the printer. Everything below is
+                visible in a photograph of our machine or is a channel in our own logs.
               </p>
             </div>
 
@@ -228,8 +201,8 @@
             <p class="provenance" data-reveal>
               Platform:
               <a href="https://bracketbot.com" target="_blank" rel="noopener">bracketbot.com</a>.
-              The motion on this page is played back from our own teleop logs, not
-              animated by hand.
+              The motion above is played back from our own teleop logs, not animated by
+              hand.
             </p>
           </div>
         </section>
@@ -238,17 +211,16 @@
         <section class="shell" id="why">
           <div class="grid">
             <div class="section-mark">
-              <span class="section-mark__index">05</span>
+              <span class="section-mark__index">03</span>
               <span class="section-mark__label">Why it matters</span>
             </div>
 
             <div class="pitch__lede" data-reveal>
               <h2>The bed is the first thing.<br />It isn't the last.</h2>
               <p style="margin-top: 1.5rem">
-                Print farms already solve throughput by buying more printers. What nobody
-                has taken out is the minute of human attention every machine needs between
-                jobs — clearing the last part, reloading a spool, starting the next file.
-                Take that out and how hard a printer runs stops depending on who's awake.
+                Print farms solve throughput by buying more printers. Nobody has taken out
+                the minute of human attention each machine needs between jobs. Take that
+                out and how hard a printer runs stops depending on who's awake.
               </p>
             </div>
 
@@ -257,7 +229,7 @@
                 <h3>Running today</h3>
                 <ul>
                   <li>A BracketBot working alongside a Bambu Lab X1 Carbon</li>
-                  <li>Teleoperated bed lifts, recorded and logged</li>
+                  <li>Teleoperated bed lifts and part pickups, recorded and logged</li>
                   <li>The episode being replayed on this page</li>
                 </ul>
               </div>
@@ -267,7 +239,6 @@
                   <li>The reset running without a person driving it</li>
                   <li>Swapping filament when a spool runs out</li>
                   <li>Queueing work across several machines</li>
-                  <li>A print setup that doesn't stop when the room empties</li>
                 </ul>
               </div>
             </div>
@@ -283,7 +254,7 @@
         <section class="shell" id="team">
           <div class="grid">
             <div class="section-mark">
-              <span class="section-mark__index">06</span>
+              <span class="section-mark__index">04</span>
               <span class="section-mark__label">Team</span>
             </div>
 

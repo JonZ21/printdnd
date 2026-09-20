@@ -41,23 +41,24 @@ if (reducedMotion) {
 
 /* ------------------------------------------------------------------ wrist cam */
 
-const video = document.querySelector<HTMLVideoElement>("#wrist-cam");
-if (video) {
-  if (reducedMotion) {
-    // Leave it on the poster frame; the caption still explains what it is.
-    video.controls = true;
-  } else {
-    const videoObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) void video.play().catch(() => {});
-          else video.pause();
-        }
-      },
-      { threshold: 0.25 },
-    );
-    videoObserver.observe(video);
-  }
+const clips = document.querySelectorAll<HTMLVideoElement>("video[data-clip]");
+if (reducedMotion) {
+  // Leave them on their poster frames; the captions still explain what they are.
+  clips.forEach((clip) => {
+    clip.controls = true;
+  });
+} else {
+  const clipObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const clip = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) void clip.play().catch(() => {});
+        else clip.pause();
+      }
+    },
+    { threshold: 0.25 },
+  );
+  clips.forEach((clip) => clipObserver.observe(clip));
 }
 
 /* ---------------------------------------------------------------------- robot */
@@ -119,20 +120,30 @@ async function start() {
     if (timeEl) timeEl.textContent = seconds.toFixed(1);
   });
 
-  const onScroll = () => {
-    // The episode is scrubbed across the span from the top of the page to the end of
-    // the reset section -- exactly the stretch where the robot is on screen.
-    const end = resetSection
-      ? resetSection.offsetTop + resetSection.offsetHeight - window.innerHeight * 0.9
-      : window.innerHeight * 3;
-    const progress = end > 0 ? window.scrollY / end : 0;
-    handle.setProgress(Math.min(Math.max(progress, 0), 1));
+  const clamp01 = (value: number) => Math.min(Math.max(value, 0), 1);
 
-    // Fade the robot out once the page moves on to the footage.
-    const fadeStart = end;
-    const fadeOver = window.innerHeight * 0.75;
-    const fade = 1 - Math.min(Math.max((window.scrollY - fadeStart) / fadeOver, 0), 1);
-    canvas.style.opacity = fade.toFixed(3);
+  const onScroll = () => {
+    const viewport = window.innerHeight;
+
+    if (resetSection) {
+      const top = resetSection.offsetTop;
+      const bottom = top + resetSection.offsetHeight;
+
+      // The episode is scrubbed across the reset section: it starts as the section
+      // comes into view and finishes as the last step leaves.
+      const from = top - viewport * 0.75;
+      const to = bottom - viewport * 0.6;
+      handle.setProgress(to > from ? clamp01((window.scrollY - from) / (to - from)) : 0);
+
+      // Visibility is driven by how much of the reset section the viewport is actually
+      // showing, which behaves the same on a short phone hero as on a wide desktop one.
+      // Keying it to scroll offsets instead lets the robot bleed into the hero whenever
+      // the viewport is taller than the hero.
+      const rect = resetSection.getBoundingClientRect();
+      const shown = Math.min(rect.bottom, viewport) - Math.max(rect.top, 0);
+      const coverage = clamp01(shown / Math.min(rect.height, viewport));
+      canvas.style.opacity = clamp01((coverage - 0.45) / 0.3).toFixed(3);
+    }
 
     markActiveStep();
   };
