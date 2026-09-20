@@ -64,7 +64,11 @@ encode() {
 # Sized by how large each one actually renders: vla leads the hero, the rest run in a
 # strip beneath it, and wrist-cam is the smallest tile of the four.
 encode "$VLA_SRC" vla 6 28 "scale=-2:960,"
-encode "$TIMELAPSE_SRC" timelapse 10 32 "scale=768:-2,"
+# Cropped to the robot and the operator in the Quest headset rather than the whole
+# hallway: that pair is the actual subject, and it drops the incidental crowd.
+# No scale after the crop: 640x400 is already the right size for the tile, and
+# upscaling it to 768 only spent bitrate inventing pixels.
+encode "$TIMELAPSE_SRC" timelapse 10 30 "crop=608:380:672:330,"
 encode "$PICKUP_SRC" pickup 2 27 "scale=560:-2,"
 encode "$WRIST_SRC" wrist-cam 4 29 "scale=480:-2,"
 
