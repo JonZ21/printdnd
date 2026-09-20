@@ -40,6 +40,12 @@
   margin-left: -0.055em;
 }
 
+/* Set solid, "PRINTDND" reads as one block and the pun doesn't land. The accent splits
+   it, and matches the DND in the headline. */
+.wordmark__dnd {
+  color: var(--molten);
+}
+
 .wordmark__expansion {
   display: block;
   margin-top: 0.42rem;

@@ -1,4 +1,4 @@
-# Print D&D
+# PrintDND
 
 Marketing site for PrintDND — printdnd.ca. Static single page: Vite + vanilla TypeScript
 + Three.js. Deployed on Vercel.
