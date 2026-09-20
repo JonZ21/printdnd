@@ -11,3 +11,7 @@ scripts/_scratch/
 # public/media/ are committed -- see scripts/bake-clip.sh.
 /*.mp4
 /*.mkv
+
+# Thumbnail working files: served by the dev server, never copied into dist.
+/thumb.html
+/_thumb-robot.jpg
